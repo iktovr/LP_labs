@@ -1,6 +1,14 @@
-% Task 2: Relational Data
+:- include("two.pl").
 
-% The line below imports the data
-:- ['one.pl'].
+average(Subj, X) :-
+	bagof(Mark, Group^Stud^grade(Group, Stud, Subj, Mark), Res),
+	sum_list(Res, Sum), length(Res, N),
+	X is Sum / N.
 
-group(X,L) :- findall(Z,student(X,Z),L).
+not_passed_group(Group, X) :-
+	setof(Stud, Subj^grade(Group, Stud, Subj, 2), Res),
+	length(Res, X).
+
+not_passed_subj(Subj, X) :-
+	setof(Stud, Group^grade(Group, Stud, Subj, 2), Res),
+	length(Res, X).
