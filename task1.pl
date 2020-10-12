@@ -1,3 +1,4 @@
+%% Стандартные предикаты
 mylength([], 0).
 mylength([_|L], N) :- mylength(L, N1), N is N1 + 1.
 
@@ -17,13 +18,18 @@ mysublist([], _).
 mysublist([H|S], [H|L]) :- mysublist(S, L).
 mysublist([H1|S], [H2|L]) :- mysublist([H1|S], L), H1 \= H2.
 
+%% Предикат обработки списка
 remove_last([_], []).
 remove_last([H|L], [H|R]) :- remove_last(L, R).
 
 remove_last_std(L, R) :- myappend(R, [_], L).
 
+%% Предикат обработки числового списка
 sorted([]).
 sorted([_]).
 sorted([X,Y|L]) :- X =< Y, sorted([Y|L]).
 
 sorted_std(L) :- myappend(_, [X,Y|_], L), X =< Y.
+
+%% Примеры совместного использования предикатов
+bad_sort(L, R) :- mypermute(L, R), sorted(R).
