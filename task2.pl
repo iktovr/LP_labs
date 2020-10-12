@@ -10,5 +10,5 @@ not_passed_group(Group, X) :-
 	length(Res, X).
 
 not_passed_subj(Subj, X) :-
-	setof(Stud, Group^grade(Group, Stud, Subj, 2), Res),
+	bagof(Stud, Group^grade(Group, Stud, Subj, 2), Res),
 	length(Res, X).
