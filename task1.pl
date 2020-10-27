@@ -29,7 +29,8 @@ sorted([]).
 sorted([_]).
 sorted([X,Y|L]) :- X =< Y, sorted([Y|L]).
 
-sorted_std(L) :- myappend(_, [X,Y|_], L), X =< Y.
+unsorted_std(L) :- myappend(_, [X,Y|_], L), X > Y.
+sorted_std(L) :- not(unsorted_std(L)).
 
 %% Примеры совместного использования предикатов
 bad_sort(L, R) :- mypermute(L, R), sorted(R).

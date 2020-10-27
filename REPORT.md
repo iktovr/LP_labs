@@ -55,6 +55,14 @@ false.
 false.
 ?- remove_last([61, 2, X, g, U], [61, 2, X, g]).
 true.
+
+?- remove_last_std([1, 2, 3, 4], X).
+X = [1, 2, 3] ;
+false.
+?- remove_last_std([1, 2, 3, 4], [5, 6]).
+false.
+3 ?- remove_last_std([61, 2, X, g, U], [61, 2, X, g]).
+true.
 ```
 
 Реализация:
@@ -79,6 +87,11 @@ true ;
 false.
 ?- sorted([67, 89, 12]).
 false.
+
+?- sorted_std([2, 7, 7, 9, 123, 789]).
+true.
+?- sorted_std([67, 89, 12]).
+false.
 ```
 
 Реализация:
@@ -88,7 +101,8 @@ sorted([_]).
 sorted([X,Y|L]) :- X =< Y, sorted([Y|L]).
 
 % Реализация со стандартными предикатами
-sorted_std(L) :- myappend(_, [X,Y|_], L), X =< Y.
+unsorted_std(L) :- myappend(_, [X,Y|_], L), X > Y.
+sorted_std(L) :- not(unsorted_std(L)).
 ```
 
 Список отсортирован, если все во всех парах подряд идущих элементов, первый элемент меньше либо равен второго.
