@@ -50,7 +50,7 @@ det --> [the]; [a]; [].
 adjective_phrase --> [].
 adjective_phrase --> adjective, adjective_phrase.
 
-adjective --> [small].
+adjective --> [small]; [old].
 
 noun(Word) --> [Word].
 
