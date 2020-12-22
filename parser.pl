@@ -5,8 +5,8 @@ sentence --> [].
 sentence --> indi_record, sentence.
 sentence --> fam_record, sentence.
 
-childs(Childs) --> tag('CHIL'), id(Id), childs(Childs2), {Childs = [Id|Childs2]}.
-childs(Childs) --> tag('CHIL'), id(Id), {Childs = [Id]}.
+childs([Id|Childs]) --> tag('CHIL'), id(Id), childs(Childs).
+childs([Id]) --> tag('CHIL'), id(Id).
 
 family --> tag('HUSB'), id(Husbid), tag('WIFE'), id(Wifeid), childs(Childs), {add_parents(Husbid,Wifeid,Childs)}.
 family --> tag('HUSB'), id(_), tag('WIFE'), id(_).
@@ -29,14 +29,12 @@ name(Name) --> [Name].
 
 id(Id) --> [Id].
 
-add_person(Id,Name) :- clause(person(Id,Name), true).
 add_person(Id,Name) :- assert(person(Id,Name)).
-add_parents(_,_,[]).
 
-add_parents(Id1,Id2,[Child|Childs]) :- clause(parents(Id1,Id2,Child), true), add_parents(Id1,Id2,Childs).
+add_parents(_,_,[]).
 add_parents(Id1,Id2,[Child|Childs]) :- assert(parents(Id1,Id2,Child)), add_parents(Id1,Id2,Childs).
 
-write_parent(_,'@@',_).
+write_parent(_,'@@',_) :- !.
 write_parent(Parent,Id1,Id2) :- person(Id1, Name1), person(Id2, Name2), write(Parent), write("("), writeq(Name1), write(","), writeq(Name2), write(")."), nl.
 
 main :- 
