@@ -71,7 +71,7 @@ path(dfs, X, Y, Path, Len) :- get_time(Start), dfs([X], Y, Path), get_time(End),
 bfs([[X|T]|_], X, [X|T]).
 bfs([P|Q1],X,R) :-
 	findall(Z, prolong(P,Z), T),
-	append(Q1, T, Q2), !,
+	append(Q1, T, Q2),
 	bfs(Q2, X, R).
 %% Было обнаружено, что в стандартных реализациях Пролога (SWI-Prolog, GNU-Prolog)
 %% предикат findall возваращает пустой список при отсутствии решений, поэтому
@@ -87,7 +87,7 @@ path(bfs, X, Y, Path, Len) :- get_time(Start), bfs([[X]], Y, Path), get_time(End
 num(1).
 num(A) :- num(B), A is B + 1.
 
-ids([X|T], X, [X|T], _).
+ids([X|T], X, [X|T], 0).
 ids(P1, X, R, N) :- N > 0,
 	prolong(P1, P2), N1 is N - 1,
 	ids(P2, X, R, N1).
